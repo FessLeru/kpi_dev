@@ -1,0 +1,21 @@
+name: Docker Compose checks
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Build and test all pages
+        run: docker compose --profile test run --build --rm test
+      - name: Save test report and visual comparisons
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: browser-and-test-results
+          path: artifacts/
+      - name: Stop containers
+        if: always()
+        run: docker compose --profile test down

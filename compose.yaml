@@ -1,0 +1,38 @@
+name: kpi-dev
+services:
+  web:
+    build: &production-build
+      context: .
+      target: production
+    ports:
+      - "127.0.0.1:${PORT:-8000}:8000"
+    volumes:
+      - inquiries:/data
+    restart: unless-stopped
+    healthcheck: &healthcheck
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/healthz', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+  test-web:
+    profiles: ["test"]
+    build: *production-build
+    tmpfs:
+      - /data:uid=10001,gid=10001,mode=0700
+    healthcheck: *healthcheck
+  test:
+    profiles: ["test"]
+    build:
+      context: .
+      target: test
+    environment:
+      BASE_URL: http://test-web:8000
+    depends_on:
+      test-web:
+        condition: service_healthy
+    volumes:
+      - ./artifacts:/site/artifacts
+    command: ["pytest", "--cov=app", "--cov-branch", "--cov-report=term-missing", "--cov-report=xml:artifacts/coverage.xml", "--cov-fail-under=95", "--junitxml=artifacts/results.xml"]
+volumes:
+  inquiries:

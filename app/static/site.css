@@ -1,0 +1,51 @@
+@font-face { font-family: Manrope; src: url('/static/fonts/Manrope.ttf') format('truetype'); font-weight: 200 800; font-style: normal; font-display: swap; }
+* { box-sizing: border-box; }
+html { background: #111313; color: #f4f5ef; }
+body { margin: 0; font-family: Manrope, sans-serif; }
+h1, h2, h3, p, form, figure { margin: 0; }
+a { color: inherit; text-decoration: none; }
+button, input, textarea { font: inherit; color: inherit; border: 0; margin: 0; }
+button { padding: 0; text-align: inherit; cursor: pointer; }
+a[href], button { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid #b9a7e8; outline-offset: 4px; }
+.page { margin-inline: auto; vertical-align: top; }
+.skip-link { position: fixed; left: 12px; top: -100px; z-index: 10; background: #d5f77a; color: #111313; padding: 12px; }
+.skip-link:focus { top: 12px; }
+.field { display: block; padding: 16px; font: 400 16px/24px Manrope, sans-serif; color: #f4f5ef; resize: none; }
+.field::placeholder { color: #a4aba5; opacity: 1; }
+.consent-check { appearance: none; width: 20px; height: 20px; flex-shrink: 0; border: 1px solid #a4aba5; border-radius: 4px; background: transparent; cursor: pointer; }
+.consent-check:checked { background: #d5f77a; border-color: #d5f77a; box-shadow: inset 0 0 0 4px #1b1e1d; }
+.consent-label { cursor: pointer; }
+[hidden] { display: none !important; }
+.form-status { width: 100%; font-size: 14px; line-height: 22px; }
+.form-status:empty { display: none; }
+button:disabled { opacity: .65; cursor: wait; }
+.project-filters button[aria-pressed="true"] { background: #d5f77a !important; }
+.project-filters button[aria-pressed="true"] > * { color: #111313 !important; }
+.project-filters button[aria-pressed="false"] { background: #232725 !important; }
+.project-filters button[aria-pressed="false"] > * { color: #f4f5ef !important; }
+.projects-filtered { display: flex !important; flex-wrap: wrap; gap: 36px 20px; width: 1312px; }
+.projects-filtered > .project-row { display: contents !important; }
+/* Only desktop frames were supplied. Smaller viewports use a readable stacked layout. */
+@media (max-width: 1439px) and (min-width: 901px) {
+  .page { zoom: calc(100vw / 1440px); }
+}
+@media (max-width: 900px) {
+  .page { width: 100% !important; }
+  .page > * { width: 100% !important; padding: 32px 20px !important; }
+  .flow { width: 100% !important; max-width: 100%; }
+  .row { flex-direction: column !important; gap: 24px !important; align-items: stretch !important; }
+  .flow:not(.artwork):not(.artwork-shell):not([data-layer="Разделитель"]):not([data-layer^="Кнопка /"]):not(input):not(textarea):not(button) { height: auto !important; }
+  [data-layer="Логотип и разделы"] { flex-direction: row !important; align-items: center !important; gap: 20px !important; }
+  [data-layer="Логотип и разделы"] > a { width: auto !important; }
+  [data-layer="Логотип и разделы"] > a:first-child { margin-right: auto; }
+  h1 { font-size: 36px !important; line-height: 44px !important; }
+  h2 { font-size: 30px !important; line-height: 38px !important; }
+  .artwork-shell { width: 100%; overflow: hidden; }
+  .artwork { transform-origin: top left; }
+  .project-filters { flex-flow: row wrap !important; gap: 10px !important; }
+  .project-filters > button { width: auto !important; padding-inline: 16px; }
+  .project-filters > button > * { width: auto !important; }
+  .projects-filtered { width: 100%; }
+  .consent-label { flex-direction: row !important; gap: 12px !important; }
+}

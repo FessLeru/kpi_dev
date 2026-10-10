@@ -1,0 +1,5 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = ["browser: real Chromium tests (requires running website)"]
+addopts = "-ra"
